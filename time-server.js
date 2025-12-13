@@ -1,9 +1,12 @@
-
+// load the net module
 const net = require('net');
 
+// helper function to zero-fill single digit numbers
 function zeroFill(n) {
     return n < 10 ? '0' + n : n;
 }
+
+// function to format the current date and time
 
 function formatTime() {
     const now = new Date();
@@ -17,10 +20,11 @@ function formatTime() {
     return `${year}-${month}-${day} ${hour}:${minute}`;
 }
 
+// get the port number from command line arguments
 const port = process.argv[2];
-
+// create the server
 const server = net.createServer(function (socket) {
     socket.end(formatTime() + '\n');
 });
-
+// have the server listen on the specified port
 server.listen(port);

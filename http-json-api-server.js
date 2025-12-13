@@ -6,11 +6,13 @@ const url = require('url');
 const port = Number(process.argv[2]);
 
 const server = http.createServer(function (req, res) {
+    // Parse request URL and extract query parameters
     const parsedUrl = url.parse(req.url, true);
     const pathname = parsedUrl.pathname;
     const iso = parsedUrl.query.iso;
     let result;
 
+    // Route: /api/parsetime — extract hour, minute, second from provided ISO timestamp
     if (pathname === '/api/parsetime' && iso) {
         const d = new Date(iso);
         result = {
@@ -18,6 +20,7 @@ const server = http.createServer(function (req, res) {
             minute: d.getMinutes(),
             second: d.getSeconds()
         };
+    // Route: /api/unixtime — return the unixtime (ms since epoch)
     } else if (pathname === '/api/unixtime' && iso) {
         result = {
             unixtime: Date.parse(iso)
